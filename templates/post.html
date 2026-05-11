@@ -23,32 +23,91 @@
       text-decoration: none;
       color: white;
     }
+    .nav-btn {
+      min-width: 120px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    @media (max-width: 991px) {
+      .nav-btn,
+      .btn-outline-light {
+        width: 100%;
+      }
+    }
+    .card-body {
+      word-wrap: break-word;
+    }
+    .card-text {
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    html,
+    body {
+      overflow-x: hidden;
+    }
+    .brand-text {
+      font-size: 1.1rem;
+      white-space: nowrap;
+    }
+    @media (max-width: 991px) {
+      .navbar-collapse {
+        margin-top: 15px;
+      }
+      .nav-btn {
+        width: 100%;
+      }
+      .brand-text {
+        font-size: 0.95rem;
+      }
+    }
   </style>
 
   <body>
-    <nav class="navbar bg-dark border-body" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-dark px-3" data-bs-theme="dark">
       <div class="container-fluid">
-        <a class="navbar-brand">
+        <!-- LEFT SIDE -->
+        <a class="navbar-brand d-flex align-items-center text-white m-0">
           <img
             src="{% static 'images/brain.png' %}"
             alt="Logo"
-            width="50"
-            height="50"
-            class="d-inline-block align-text-top"
+            width="45"
+            height="45"
+            class="me-2"
           />
-          Welcome to Scribbled thoughts</a
+
+          <span class="brand-text"> Welcome to Scribbled thoughts </span>
+        </a>
+
+        <!-- HAMBURGER -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarContent"
         >
-        <div class="col-4 d-flex justify-content-end align-items-center">
-          <button type="button" class="btn btn-outline-light mx-2">
-            <a href="/" class="home">Home</a>
-          </button>
-          <a
-            class="btn btn-outline-light"
-            data-bs-toggle="modal"
-            data-bs-target="#loginModal"
-            href="/login"
-            >Log In</a
-          >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- RIGHT SIDE -->
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarContent"
+        >
+          <div class="d-flex flex-column flex-lg-row gap-2 mt-3 mt-lg-0">
+            <a href="/" class="btn btn-outline-light nav-btn"> Home </a>
+
+            <a
+              class="btn btn-outline-light nav-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#loginModal"
+            >
+              Log In
+            </a>
+          </div>
         </div>
       </div>
     </nav>
@@ -125,7 +184,7 @@
     </div>
     {% endcomment %}
 
-    <div class="card border-dark mb-3 mx-3 my-3">
+    <div class="card border-dark mb-3 mx-2 mx-md-4 my-3">
       <div class="card-header">{{post.created_at}}</div>
       <div class="card-body">
         <h5 class="card-title">{{post.title}}</h5>
@@ -163,7 +222,7 @@
       {% endif %}
     </div>
 
-    <div class="mx-3">
+    <div class="container-fluid px-2 px-md-4 pb-4">
       <h5>Comments</h5>
       <!-- Show comments -->
       {% for comment in comments %}
@@ -221,7 +280,7 @@
         </div>
       </div>
 
-      {% comment %} allow to comment only if the user is authenticated! {% endcomment %} 
+      {% comment %}allow to comment only if the user is authenticated {%endcomment %} 
       {% if user.is_authenticated %}
       <form method="POST" action="{% url 'add_comment' post.id %}">
         {% csrf_token %}
@@ -230,8 +289,9 @@
           class="form-control mb-2"
           placeholder="Write your thoughts..."
           required
+          rows="4"
         ></textarea>
-        <button class="btn btn-dark">Post Comment</button>
+        <button class="btn btn-dark w-100 w-md-auto">Post Comment</button>
       </form>
       {% else %}
       <p>
