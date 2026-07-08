@@ -64,7 +64,7 @@ def signup(request):
         messages.success(request, "Account created successfully")
         return redirect('index')  # or 'login'
 
-    return redirect('index')  # since you're using modal, no page needed
+    return redirect('index')  
 
 def user_login(request):
     
@@ -107,8 +107,8 @@ def like_post(request, id):
     post = Post.objects.get(id=id)
 
     if request.user in post.likes.all():
-        post.likes.remove(request.user)   # unlike
+        post.likes.remove(request.user)   
     else:
-        post.likes.add(request.user)      # like
+        post.likes.add(request.user)      
 
     return redirect('post',pk=id)
